@@ -1,5 +1,6 @@
 package ru.tibedox.myguess;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -9,7 +10,9 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("MyGuess");
-		config.setWindowedMode(MyGuess.SCR_WIDTH, MyGuess.SCR_HEIGHT);
+		//config.setWindowedMode(MyGuess.SCR_WIDTH, MyGuess.SCR_HEIGHT);
+		Graphics.DisplayMode displayMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
+		config.setFullscreenMode(displayMode);
 		new Lwjgl3Application(new MyGuess(), config);
 	}
 }

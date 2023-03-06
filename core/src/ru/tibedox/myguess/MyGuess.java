@@ -17,9 +17,6 @@ public class MyGuess extends Game {
 	Vector3 touch;
 	BitmapFont font, fontLarge;
 
-	Texture[] imgPic = new Texture[2];
-	Texture imgBox;
-
 	ScreenMenu screenMenu;
 	ScreenGame screenGame;
 
@@ -38,20 +35,15 @@ public class MyGuess extends Game {
 		screenMenu = new ScreenMenu(this);
 		screenGame = new ScreenGame(this);
 		setScreen(screenMenu);
-
-		imgBox = new Texture("badlogic.jpg");
-		for (int i = 0; i < imgPic.length; i++) imgPic[i] = new Texture("img"+i+".jpg");
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		imgBox.dispose();
-		for (int i = 0; i < imgPic.length; i++) imgPic[i].dispose();
 	}
 
 	void generateFont(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("montesuma.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("gothicb.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.color = new Color(1, 0.8f, 0.4f, 1);
 		parameter.size = 45;
