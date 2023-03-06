@@ -1,0 +1,69 @@
+package ru.tibedox.myguess;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector3;
+
+public class MyGuess extends Game {
+	public static final int SCR_WIDTH = 1920, SCR_HEIGHT =1080;
+	SpriteBatch batch;
+	OrthographicCamera camera;
+	Vector3 touch;
+	BitmapFont font, fontLarge;
+
+	Texture[] imgPic = new Texture[2];
+	Texture imgBox;
+
+	ScreenMenu screenMenu;
+	ScreenGame screenGame;
+
+	public static final int SIZE_3x3 = 0, SIZE_5x5 = 1, SIZE_8x8 = 2;
+	int difficulty = SIZE_3x3;
+	int masN = 3, masM = 3;
+	
+	@Override
+	public void create () {
+		batch = new SpriteBatch();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
+		touch = new Vector3();
+		generateFont();
+
+		screenMenu = new ScreenMenu(this);
+		screenGame = new ScreenGame(this);
+		setScreen(screenMenu);
+
+		imgBox = new Texture("badlogic.jpg");
+		for (int i = 0; i < imgPic.length; i++) imgPic[i] = new Texture("img"+i+".jpg");
+	}
+	
+	@Override
+	public void dispose () {
+		batch.dispose();
+		imgBox.dispose();
+		for (int i = 0; i < imgPic.length; i++) imgPic[i].dispose();
+	}
+
+	void generateFont(){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("montesuma.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.color = new Color(1, 0.8f, 0.4f, 1);
+		parameter.size = 45;
+		parameter.borderColor = Color.BLACK;
+		parameter.borderWidth = 2;
+		parameter.borderStraight = true;
+		parameter.shadowColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
+		parameter.shadowOffsetX = parameter.shadowOffsetY = 3;
+		parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+		font = generator.generateFont(parameter);
+		parameter.size = 100;
+		fontLarge = generator.generateFont(parameter);
+		generator.dispose();
+	}
+}
