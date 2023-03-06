@@ -17,7 +17,7 @@ public class ScreenGame implements Screen {
     GuButton[][] boxes;
     Texture imgCross, imgArrow, imgEye;
     Texture imgBox, imgBoxTransp;
-    Texture[] imgPic = new Texture[3];
+    Texture[] imgPic = new Texture[12];
     int currentPic;
 
     public ScreenGame(MyGuess myGuess) {
@@ -28,8 +28,8 @@ public class ScreenGame implements Screen {
         imgEye = new Texture("eye.png");
         imgBox = new Texture("box.png");
         imgBoxTransp = new Texture("boxtransp.png");
-        for (int i = 0; i < imgPic.length-1; i++) imgPic[i] = new Texture("img"+i+".jpg");
-        imgPic[imgPic.length-1] = new Texture("imgend.png");
+        for (int i = 0; i < imgPic.length-1; i++) imgPic[i] = new Texture("pics/pic"+i+".jpg");
+        imgPic[imgPic.length-1] = new Texture("pics/imgend.png");
 
         btnView = new GuButton(imgEye, 20, 20, 50, 50);
         btnNext = new GuButton(imgArrow, SCR_WIDTH-70, 20, 50, 50);
