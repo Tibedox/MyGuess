@@ -16,7 +16,7 @@ public class ScreenGame implements Screen {
     GuButton btnNext, btnExit, btnView;
     GuButton[][] boxes;
     Texture imgCross, imgArrow, imgEye;
-    Texture imgBox, imgBoxTransp;
+    Texture imgBox;
     Texture[] imgPic = new Texture[12];
     int currentPic;
 
@@ -27,7 +27,6 @@ public class ScreenGame implements Screen {
         imgArrow = new Texture("arrow.png");
         imgEye = new Texture("eye.png");
         imgBox = new Texture("box.png");
-        imgBoxTransp = new Texture("boxtransp.png");
         for (int i = 0; i < imgPic.length-1; i++) imgPic[i] = new Texture("pics/pic"+i+".jpg");
         imgPic[imgPic.length-1] = new Texture("pics/imgend.png");
 
@@ -42,9 +41,16 @@ public class ScreenGame implements Screen {
         boxes = new GuButton[gg.masN][gg.masM];
         float width = SCR_WIDTH/(float)gg.masN;
         float height = SCR_HEIGHT/(float)gg.masM;
+
         for (int i = 0; i < gg.masN; i++) {
             for (int j = 0; j < gg.masM; j++) {
-                boxes[i][j] = new GuButton(imgBox, width*i, height*j, width, height);
+                boxes[i][j] = new GuButton(imgBox, gg.font, "", width*i, height*j, width, height);
+            }
+        }
+        int k=1;
+        for (int j = gg.masM-1; j >= 0; j--) {
+            for (int i = 0; i < gg.masN; i++) {
+                boxes[i][j].setText(""+k++);
             }
         }
     }
@@ -65,7 +71,7 @@ public class ScreenGame implements Screen {
                 for (int i = 0; i < gg.masN; i++) {
                     for (int j = 0; j < gg.masM; j++) {
                         if (boxes[i][j].hit(gg.touch.x, gg.touch.y)) {
-                            boxes[i][j].img = imgBoxTransp;
+                            boxRemove(boxes[i][j]);
                         }
                     }
                 }
@@ -87,7 +93,7 @@ public class ScreenGame implements Screen {
         btnNext.draw(gg.batch);
         btnExit.draw(gg.batch);
         btnView.draw(gg.batch);
-        gg.font.draw(gg.batch, ""+(currentPic+1), 20, SCR_HEIGHT-20);
+        gg.fontMedium.draw(gg.batch, ""+(currentPic+1), 20, SCR_HEIGHT-20);
         gg.batch.end();
     }
 
@@ -116,14 +122,13 @@ public class ScreenGame implements Screen {
         imgArrow.dispose();
         imgCross.dispose();
         imgBox.dispose();
-        imgBoxTransp.dispose();
         for (int i = 0; i < imgPic.length; i++) imgPic[i].dispose();
     }
 
     void nextPic(){
         for (int i = 0; i < gg.masN; i++) {
             for (int j = 0; j < gg.masM; j++) {
-                boxes[i][j].img = imgBox;
+                boxComeback(boxes[i][j]);
             }
         }
         if(currentPic<imgPic.length-1) currentPic++;
@@ -132,8 +137,22 @@ public class ScreenGame implements Screen {
     void clearAll(){
         for (int i = 0; i < gg.masN; i++) {
             for (int j = 0; j < gg.masM; j++) {
-                boxes[i][j].img = imgBoxTransp;
+                boxRemove(boxes[i][j]);
             }
+        }
+    }
+
+    void boxRemove(GuButton b){
+        if(b.x>=0) {
+            b.x -= 10000;
+            b.xText -= 10000;
+        }
+    }
+
+    void boxComeback(GuButton b) {
+        if(b.x<0) {
+            b.x += 10000;
+            b.xText += 10000;
         }
     }
 }

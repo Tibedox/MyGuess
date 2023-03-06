@@ -15,7 +15,7 @@ public class MyGuess extends Game {
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	Vector3 touch;
-	BitmapFont font, fontLarge;
+	BitmapFont font, fontMedium, fontLarge;
 
 	ScreenMenu screenMenu;
 	ScreenGame screenGame;
@@ -45,7 +45,7 @@ public class MyGuess extends Game {
 	void generateFont(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("gothicb.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.color = new Color(1, 0.8f, 0.4f, 1);
+		parameter.color = new Color(0.8f, 1, 0.4f, 1);
 		parameter.size = 45;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 2;
@@ -54,6 +54,9 @@ public class MyGuess extends Game {
 		parameter.shadowOffsetX = parameter.shadowOffsetY = 3;
 		parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 		font = generator.generateFont(parameter);
+		parameter.color = new Color(1, 0.8f, 0.4f, 1);
+		parameter.size = 60;
+		fontMedium = generator.generateFont(parameter);
 		parameter.size = 100;
 		fontLarge = generator.generateFont(parameter);
 		generator.dispose();
